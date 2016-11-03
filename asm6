@@ -1,0 +1,79 @@
+# time_and_count.py
+Dr. Luby Liao Assignment 6
+ import time
+
+
+
+ def time_and_count(f):
+
+     cache = {}
+
+
+
+     def wrapper(x):
+
+         try:
+
+             return cache[x]
+
+         except:
+
+             cache[x] = time.clock()
+
+             return cache[x]
+
+     return wrapper
+
+
+
+ def countdown(n: int):
+
+     while n > 0:
+
+         n -= 1
+
+
+
+
+
+ if __name__ == '__main__':
+
+     countdown = time_and_count(countdown)
+
+     for i in range(1000):
+
+         countdown(i)
+
+
+
+     def sum_of_squares(n):
+
+         total = 0
+
+         for i in range(n):
+
+             total += i*i
+
+         return total
+
+
+
+     sum_of_squares = time_and_count(sum_of_squares)
+
+
+
+     for i in range(1000):
+
+         sum_of_squares(i)
+
+
+
+     print('countdown(10000)')
+
+     print(countdown.__closure__[0].cell_contents)
+
+     print('sum_of_squares(10000)')
+
+     print(sum_of_squares.__closure__[0].cell_contents)
+
+     print(sum_of_squares)
