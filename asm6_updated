@@ -1,0 +1,48 @@
+import time
+
+class time_and_count:
+    def __init__(self, f):
+        self.f = f
+        self.cache = {}
+        self.time = None
+        self.counter = 0
+
+    def __call__(self, f):
+        try:
+            return self.cache[f]
+        except:
+            self.time = time.time()
+            self.counter += 1
+            self.cache[f] = self.time
+            print(self.cache[f])
+            print(self.counter)
+            return self.cache[f]
+
+@time_and_count
+def countdown(n: int):
+    while n > 0:
+        n -= 1
+
+
+if __name__ == '__main__':
+    #countdown = time_and_count(countdown)
+    for i in range(1000):
+        countdown(i)
+        
+    @time_and_count
+    def sum_of_squares(n):
+        total = 0
+        for i in range(n):
+            total += i*i
+        return total
+
+    #sum_of_squares = time_and_count(sum_of_squares)
+
+    for i in range(1000):
+        sum_of_squares(i)
+
+    print('countdown(10000)')
+    #print(countdown.__closure__[0].cell_contents)
+    print('sum_of_squares(10000)')
+    #print(sum_of_squares.__closure__[0].cell_contents)
+    print(sum_of_squares)
